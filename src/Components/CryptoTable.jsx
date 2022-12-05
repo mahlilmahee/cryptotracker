@@ -7,6 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Avatar } from '@mui/material';
+import Tableinfo from './Tableinfo';
 const CryptoTable = () => {
     const [cryptoData,setCryptoData] =useState([]);
 
@@ -38,26 +39,9 @@ const CryptoTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {cryptoData.map((row,index) => (
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                 {index+1}
-              
-              </TableCell>
-              <TableCell component="th" scope="row"> 
-                {row.name} <Avatar alt="Travis Howard" src={row.image} />
-              </TableCell>
-              <TableCell align="right">{row.current_price}$</TableCell>
-              <TableCell align="right">{row.market_cap_rank}</TableCell>
-              <TableCell align="right">{row.market_cap}$</TableCell>
-              <TableCell align="right">{row.market_cap_change_24h}$</TableCell>
-              <TableCell align="right">{row.price_change_percentage_24h}%</TableCell>
-              <TableCell align="right">{row.high_24h}$</TableCell>
-            </TableRow>
-          ))}
+          {cryptoData.map((row,index) => 
+            <Tableinfo row={row} key={index} index={index}></Tableinfo>
+          )}
         </TableBody>
       </Table>
     </TableContainer>

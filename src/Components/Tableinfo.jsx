@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // import Table from '@mui/material/Table';
 // import TableBody from '@mui/material/TableBody';
 import TableCell from "@mui/material/TableCell";
@@ -12,27 +12,18 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import CoinDetails from "./CoinDetails";
 const Tableinfo = ({ row, index }) => {
   const navigate = useNavigate();
-  const idofCoin = row.id;
-
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "background.paper",
-    border: "2px solid #000",
-    boxShadow: 24,
-    p: 4,
-  };
+   const {id,name}=row
+  const [price,setPrice]=useState([])
+   useEffect(() =>{
+    fetch(`https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=30`)
+    .then(res=>res.json())
+    .then(data=>console.log(data.prices))
+   },[])
 
   //   export default function BasicModal() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  // }
 
   return (
     <TableRow
@@ -42,13 +33,15 @@ const Tableinfo = ({ row, index }) => {
       <TableCell component="th" scope="row">
         {index + 1}
       </TableCell>
-      <Link to={`/home/${idofCoin}`}>
+      {/* <Link to={`/home/${idofCoin}`}> */}
         {" "}
         <TableCell component="th" scope="row">
-          {row.name} <Avatar alt="Travis Howard" src={row.image} />
-          <Button onClick={handleOpen}>Open modal</Button>
+         {/* <button > {row.name} </button> */}
+         <CoinDetails name={name} id={id}></CoinDetails>
+          <Avatar alt="Travis Howard" src={row.image} />
+          {/* <Button onClick={handleOpen}>Open modal</Button> */}
         </TableCell>
-      </Link>
+      {/* </Link> */}
       <TableCell align="right">{row.current_price}$</TableCell>
       <TableCell align="right">{row.market_cap_rank}</TableCell>
       <TableCell align="right">{row.market_cap}$</TableCell>

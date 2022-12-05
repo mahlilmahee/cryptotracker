@@ -30,12 +30,13 @@ const CryptoTable = () => {
           <TableRow>
             <TableCell>#</TableCell>
             <TableCell>Name</TableCell>
-            <TableCell align="right">Name</TableCell>
+            <TableCell align="right">price</TableCell>
             <TableCell align="right">Market-Rank</TableCell>
             <TableCell align="right">Market-cap</TableCell>
             <TableCell align="right">Market-cap change (24h)</TableCell>
             <TableCell align="right">Percentage(24h)</TableCell>
             <TableCell align="right">Highest-24h</TableCell>
+            <TableCell align="right">graph</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

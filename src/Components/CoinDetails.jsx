@@ -46,6 +46,7 @@ const style = {
 
 const CoinDetails = ({name,id}) => {
  const [takeData,setTakeData]=useState([])
+ const [coinDes,setCoinDes]=useState([])
   // useEffect(() =>{
   //   fetch(`https://api.coingecko.com/api/v3/coins/${id}`)
   //   .then(res=>res.json())
@@ -57,11 +58,33 @@ const CoinDetails = ({name,id}) => {
   const handleOpen = () =>{ setOpen(true)
       fetch(`https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=7`)
       .then(res=>res.json())
-      .then(data=>setTakeData(data))
+      .then(data=>{
+
+        if(data){
+          setTakeData(data);
+          fetch(`https://api.coingecko.com/api/v3/coins/${id}?localization=false&tickers=false&community_data=false&developer_data=true&sparkline=true `)
+      .then(res=>res.json())
+      .then(data=>{
+        console.log('description',data)
+        setCoinDes(data)
+      })
+        }
+        else{
+          return ;
+        }
+      })
+
+
+      //  going with the other one 
+      
+
+ 
+
+
   };
 
   const coinInfo=takeData.prices?.map(value => ({ x: value[0], y: value[1].toFixed(2) }));
-  console.log(coinInfo,'hello ')
+  // console.log(coinInfo,'hello ')
   const handleClose = () => setOpen(false);
 
   const options = {
@@ -92,9 +115,15 @@ const CoinDetails = ({name,id}) => {
  
   <Grid container spacing={2}>
   <Grid xs={12} lg={6}>
-      <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-   watch out the details here with {id}
-    </Typography>
+   {
+    coinDes &&  <div>
+    <h3>Welcome here {coinDes?.id} </h3>
+    {/* <h3>Welcome here {coinDes?.market_data?.current_price[us]} </h3> */}
+    <img src={coinDes?.image?.small} alt="" />
+    <p className='mt-6 text-gray-500 [&>a]:text-blue-600 [&>a]:underline' dangerouslySetInnerHTML={{ __html: coinDes.description?.en }}></p>
+    <p className='mt-6 text-gray-500 [&>a]:text-blue-600 [&>a]:underline' dangerouslySetInnerHTML={{ __html: coinDes.market_price?.current_price?.usd }}></p>
+  </div>
+   }
   </Grid>
   <Grid xs={12} lg={6}>
   <Typography id="modal-modal-title" variant="h6" component="h2">

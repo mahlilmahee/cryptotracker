@@ -5,6 +5,32 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Grid } from '@mui/material';
+// import React from 'react';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Filler,
+  Legend,
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+import moment from 'moment/moment';
+// import faker from 'faker';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Filler,
+  Legend
+);
 
 const style = {
   position: 'absolute',
@@ -25,11 +51,34 @@ const CoinDetails = ({name,id}) => {
   //   .then(res=>res.json())
   //   .then(data=>console.log(data))
   // },[])
+
+  
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () =>{ setOpen(true)
+      fetch(`https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=7`)
+      .then(res=>res.json())
+      .then(data=>setTakeData(data))
+  };
+
+  const coinInfo=takeData.prices?.map(value => ({ x: value[0], y: value[1].toFixed(2) }));
+  console.log(coinInfo,'hello ')
   const handleClose = () => setOpen(false);
 
-
+  const options = {
+    responsive: true
+  }
+  const data = {
+    labels: coinInfo?.map(value => moment(value.x).format('MMM DD')),
+    datasets: [
+      {
+        fill: true,
+        label: id,
+        data: coinInfo?.map(val => val.y),
+        borderColor: 'red',
+        backgroundColor: 'green',
+      }
+    ]
+  }
     return <>
     <Button onClick={handleOpen}>{name}</Button>
 <Modal
@@ -49,7 +98,8 @@ const CoinDetails = ({name,id}) => {
   </Grid>
   <Grid xs={12} lg={6}>
   <Typography id="modal-modal-title" variant="h6" component="h2">
-     {name} baby give me
+  <Line options={options} data={data} />
+
          </Typography>
  
   </Grid>

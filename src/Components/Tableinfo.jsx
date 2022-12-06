@@ -16,12 +16,12 @@ import CoinDetails from "./CoinDetails";
 const Tableinfo = ({ row, index }) => {
   const navigate = useNavigate();
    const {id,name}=row
-  const [price,setPrice]=useState([])
-   useEffect(() =>{
-    fetch(`https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=30`)
-    .then(res=>res.json())
-    .then(data=>console.log(data.prices))
-   },[])
+  // const [price,setPrice]=useState([])
+  //  useEffect(() =>{
+  //   fetch(`https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=30`)
+  //   .then(res=>res.json())
+  //   .then(data=>console.log(data.prices))
+  //  },[])
 
   //   export default function BasicModal() {
 

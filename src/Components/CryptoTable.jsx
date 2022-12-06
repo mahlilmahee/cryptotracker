@@ -36,7 +36,7 @@ const CryptoTable = () => {
             <TableCell align="right">Market-cap change (24h)</TableCell>
             <TableCell align="right">Percentage(24h)</TableCell>
             <TableCell align="right">Highest-24h</TableCell>
-            <TableCell align="right">graph</TableCell>
+            {/* <TableCell align="right">graph</TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
